@@ -1,2 +1,2 @@
 # EC-Battleship
-`Proyecto para la asignatura Electrónica Creativa
+Proyecto para la asignatura Electrónica Creativa
