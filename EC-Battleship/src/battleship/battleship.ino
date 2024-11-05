@@ -1,5 +1,5 @@
 #include <Adafruit_Neopixel.h>
-#include "battleship_class.h"
+#include "battleship_class.hpp"
 
 
 #define PIN 6 //Pin digital
