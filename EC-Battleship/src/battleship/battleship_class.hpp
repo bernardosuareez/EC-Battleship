@@ -6,26 +6,28 @@ class Battleship
     //Constructores.
     Battleship();
     Battleship(unsigned size);
-    Battleship(unsigned size, int** possition);
+    Battleship(unsigned var_size, int varEjeX, int varEjeY);
     //Destructor.
     ~Battleship();
     //Métodos
     void mover(int x_increment, int y_increment);
-    void rotar();
+
     //set
     void set_size(unsigned size);
-    void set_possition(int* pos[2]);
+    void set_possition(int setEjeX,const int* setEjeY);
     void set_hit(bool* hit);
     void set_derribado(bool var_derribado);
     //get
     unsigned get_size();
-    int** get_possition();
+    int get_ejeX();
+    int* get_ejeY();
     bool* get_hit();
     bool get_derribado();
 
     private:
     unsigned size;      //Tamaño de la pieza.
-    int** possition;   //Posición del barco
+    int ejeX;          //Posicion en el eje X del barco.
+    int* ejeY;          //Posicion en el eje Y del barco.
     bool* hit;          //Booleano para determinar si ha sido golpeado.
     bool derribado;     //Si han derribado un barco
 
