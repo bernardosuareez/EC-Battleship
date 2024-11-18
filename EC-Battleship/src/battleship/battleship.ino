@@ -43,7 +43,7 @@ int clk = 2;    // Pin de clock del controlador NES blanco
 int latch = 3;  // Pin de latch del controlador NES negro
 
 //Barcos
-Battleship barcos = Battleship(3,2,1);
+Battleship barcos = Battleship(3,0,0);
 
 //Posicion inicial de los leds. Cambia a arrays si los tamaños de los datos son distintos a uno
 //const unsigned tam = barcos.get_size();
@@ -60,17 +60,18 @@ void atacar(Battleship atacante, Battleship defensor);
 void display(Battleship barco, int* ledX, int* ledY)
 {
   unsigned tam = barco.get_size();
+  //Serial.println(tam);
   int posX;
   int* posY;
   posX = barco.get_ejeX();
   posY = barco.get_ejeY();
 
-  Serial.println(posX);
+  //Serial.println(posX);
 
 
   for(unsigned i = 0; i < tam; ++i)
   {
-    Serial.println(posY[i]);
+    //Serial.println(posY[i]);
     ledX[i] = posX;
     ledY[i] = posY[i];
     delay(500);

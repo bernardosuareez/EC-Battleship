@@ -1,4 +1,5 @@
 #include "battleship_class.hpp"
+#include <stdio.h>
 
 //Constructores.
 Battleship::Battleship()
@@ -25,6 +26,7 @@ Battleship::Battleship(unsigned var_size, int varEjeX, int varEjeY)
     for(unsigned i = 0; i < size; ++i)
     {
         ejeY[i] = varEjeY;
+        printf("&d\n",ejeY[i]);
         ++varEjeY;
     }
 
