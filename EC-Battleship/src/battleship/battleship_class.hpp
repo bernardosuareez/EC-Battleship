@@ -1,35 +1,33 @@
 #ifndef __BATTLESHIP_HPP__
 #define __BATTLESHIP_HPP__
+
+#include <Vector.h>
+
+
 class Battleship
 {
     public:
     //Constructores.
     Battleship();
-    Battleship(unsigned size);
-    Battleship(unsigned var_size, int varEjeX, int varEjeY);
+    Battleship(int varEjeX[], int varEjeY[]);
     //Destructor.
     ~Battleship();
     //Métodos
     void mover(int x_increment, int y_increment);
-
     //set
-    void set_size(unsigned size);
-    void set_possition(int setEjeX,const int* setEjeY);
-    void set_hit(bool* hit);
+    void set_hit(bool var_hit, size_t pos);
     void set_derribado(bool var_derribado);
     //get
-    unsigned get_size();
-    int get_ejeX();
-    int* get_ejeY();
-    bool* get_hit();
+    Vector<int> get_ejeX();
+    Vector<int> get_ejeY();
+    bool get_hit(int pos);
     bool get_derribado();
 
     private:
-    unsigned size;      //Tamaño de la pieza.
-    int ejeX;          //Posicion en el eje X del barco.
-    int* ejeY;          //Posicion en el eje Y del barco.
-    bool* hit;          //Booleano para determinar si ha sido golpeado.
-    bool derribado;     //Si han derribado un barco
+    Vector<int> ejeX;
+    Vector<int> ejeY;
+    Vector<bool> hit;
+    bool derribado;
 
 };
 #endif

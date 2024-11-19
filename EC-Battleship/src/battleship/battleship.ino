@@ -1,4 +1,5 @@
 #include <Adafruit_NeoPixel.h>
+#include <Vector.h>
 #include "battleship_class.hpp"
 
 #define PIN 6 //Pin digital
@@ -43,7 +44,9 @@ int clk = 2;    // Pin de clock del controlador NES blanco
 int latch = 3;  // Pin de latch del controlador NES negro
 
 //Barcos
-Battleship barcos = Battleship(3,0,0);
+int ejeX[] = {0,0,0};
+int ejeY[] = {0,1,2};
+Battleship barcos = Battleship(ejeX,ejeY);
 
 //Posicion inicial de los leds. Cambia a arrays si los tamaños de los datos son distintos a uno
 //const unsigned tam = barcos.get_size();
@@ -59,23 +62,17 @@ void atacar(Battleship atacante, Battleship defensor);
 
 void display(Battleship barco, int* ledX, int* ledY)
 {
-  unsigned tam = barco.get_size();
-  //Serial.println(tam);
-  int posX;
-  int* posY;
-  posX = barco.get_ejeX();
-  posY = barco.get_ejeY();
-
-  //Serial.println(posX);
-
+  unsigned tam = (barcos.get_ejeX()).size();
+  Serial.println(tam);
+  Vector<int> posX = barcos.get_ejeX();
+  Vector<int> posY = barcos.get_ejeY();
 
   for(unsigned i = 0; i < tam; ++i)
   {
-    //Serial.println(posY[i]);
-    ledX[i] = posX;
-    ledY[i] = posY[i];
-    delay(500);
+    ledX[i] = posX.at(i);
+    ledY[i] = posY.at(i);
   }
+  delay(2000);
   return;
 }
 
