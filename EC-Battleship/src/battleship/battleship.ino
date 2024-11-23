@@ -15,6 +15,8 @@
 
 Adafruit_NeoPixel led_matrix = Adafruit_NeoPixel(NUM_PIXELS, PIN, NEO_GRB + NEO_KHZ800);
 
+typedef Vector<int> ejes;
+
 
 const int A_BUTTON      = 0;
 const int B_BUTTON      = 1;
