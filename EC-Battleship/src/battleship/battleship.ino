@@ -15,9 +15,6 @@
 
 Adafruit_NeoPixel led_matrix = Adafruit_NeoPixel(NUM_PIXELS, PIN, NEO_GRB + NEO_KHZ800);
 
-typedef Vector<int> ejes;
-
-
 const int A_BUTTON      = 0;
 const int B_BUTTON      = 1;
 const int SELECT_BUTTON = 2; 
@@ -62,7 +59,7 @@ uint32_t colorLed = led_matrix.Color(255,0,0); //Rojo puro
 
 void atacar(Battleship atacante, Battleship defensor);
 
-void display(Battleship barco, int* ledX, int* ledY)
+void display(Battleship barco[], int ledX[], int ledY[])
 {
   unsigned tam = (barcos.get_ejeX()).size();
   Serial.println(tam);
@@ -74,7 +71,7 @@ void display(Battleship barco, int* ledX, int* ledY)
     ledX[i] = posX.at(i);
     ledY[i] = posY.at(i);
   }
-  delay(2000);
+  delay(1000);
   return;
 }
 
