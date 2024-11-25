@@ -9,20 +9,20 @@ Battleship::Battleship() {
 }
 
 Battleship::Battleship(int varEjeX[], int varEjeY[]) {
-  if ( 1) {
+  
     for (size_t i = 0; i < sizeof(varEjeX); ++i) {
       ejeX.push_back(varEjeX[i]);
       ejeY.push_back(varEjeY[i]);
     }
     derribado = false;
     hit = 0;
-  }
+  
 }
 //Destructor.
 Battleship::~Battleship() {
 }
 //Métodos
-void Battleship::mover(int x_increment, int y_increment) {
+void Battleship::mover(const int &x_increment,const int &y_increment) {
   for (size_t i = 0; i < ejeX.size(); ++i) {
     ejeX.assign(i, ejeX.at(i) + x_increment);
     ejeY.assign(i, ejeY.at(i) + y_increment);
@@ -30,11 +30,11 @@ void Battleship::mover(int x_increment, int y_increment) {
 }
 
 //set
-void Battleship::set_hit(bool var_hit, size_t pos) {
-  hit.assign(pos, var_hit);
+void Battleship::set_hit(const unsigned &var_hit) {
+  hit = var_hit;
 }
 
-void Battleship::set_derribado(bool var_derribado) {
+void Battleship::set_derribado(const bool &var_derribado) {
   derribado = var_derribado;
 }
 //get
@@ -44,11 +44,15 @@ ejes Battleship::get_ejeX() {
 ejes Battleship::get_ejeY() {
   return ejeY;
 }
-bool Battleship::get_hit(int pos) {
-  return hit.at(pos);
+unsigned Battleship::get_hit() {
+  return hit;
 }
 bool Battleship::get_derribado() {
   return derribado;
+}
+size_t Battleship::get_size()
+{
+  return ejeX.size();
 }
 
 //Operadores
@@ -75,7 +79,7 @@ Battleship Battleship::operator^(const bool &rot)
 
 // Suma el incremento en ambos ejes, es una forma alternativa a la funcion mover.
 // Vec contiene lo que en la función mover equivale a x_increment e y_increment.
-Battleship Battleship::operator+(const int &(vec[])) // vec[0] --> x_increment; vec[1] --> y_increment;
+Battleship Battleship::operator+(int vec[]) // vec[0] --> x_increment; vec[1] --> y_increment;
 {
   Battleship* nuevo_barco = new Battleship();
   size_t tam = (this->ejeX).size();

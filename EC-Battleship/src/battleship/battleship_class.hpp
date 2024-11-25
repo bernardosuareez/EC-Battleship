@@ -14,19 +14,20 @@ class Battleship
     //Destructor.
     ~Battleship();
     //Métodos
-    void mover(int x_increment, int y_increment);
+    void mover(const int &x_increment,const int &y_increment);
     //set
-    void set_hit(bool var_hit, size_t pos);
-    void set_derribado(bool var_derribado);
+    void set_hit(const unsigned &var_hit);
+    void set_derribado(const bool &var_derribado);
     //get
     ejes get_ejeX();
     ejes get_ejeY();
-    bool get_hit(int pos);
+    unsigned get_hit();
     bool get_derribado();
+    size_t get_size();
     //Operadores
     Battleship operator=(const Battleship &barco);
     Battleship operator^(const bool &rot);
-    Battleship operator+(const int &(vec[]));
+    Battleship operator+(int vec[]);
 
     private:
     ejes ejeX;

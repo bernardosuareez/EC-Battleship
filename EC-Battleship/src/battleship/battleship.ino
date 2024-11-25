@@ -10,7 +10,7 @@
 
 #define SHIP_WIDTH 1 //Este numero corresponde a la anchura de los barcos
 #define SHIP_HEIGHT 1 //Este numero corresponde a la altura de los barcos
-
+#define NUM_BARCOS 1 //Numero de barcos
 #define TAM 3
 
 Adafruit_NeoPixel led_matrix = Adafruit_NeoPixel(NUM_PIXELS, PIN, NEO_GRB + NEO_KHZ800);
@@ -37,7 +37,7 @@ const int RIGHT_BUTTON  = 7;
   RIGHT_BUTTON //7
 }*/
 
-byte nes_register = 0;
+byte nesRegister = 0;
 int data = 4;   // Pin de datos del controlador NES verde
 int clk = 2;    // Pin de clock del controlador NES blanco
 int latch = 3;  // Pin de latch del controlador NES negro
@@ -45,12 +45,12 @@ int latch = 3;  // Pin de latch del controlador NES negro
 //Barcos
 int ejeX[] = {0,0,0};
 int ejeY[] = {0,1,2};
-Battleship barcos = Battleship(ejeX,ejeY);
+Battleship* barcos = new Battleship(ejeX,ejeY);
 
 //Posicion inicial de los leds. Cambia a arrays si los tamaños de los datos son distintos a uno
 //const unsigned tam = barcos.get_size();
 int ledX[TAM] = {0,0,0};
-int ledY[TAM] = {0,0,0};
+int ledY[TAM] = {0,1,2};
 //Esquina superior izquierda.
 
 //Color del led en formato RGB
@@ -59,19 +59,17 @@ uint32_t colorLed = led_matrix.Color(255,0,0); //Rojo puro
 
 void atacar(Battleship atacante, Battleship defensor);
 
-void display(Battleship barco[], int ledX[], int ledY[])
+void display(Battleship barcos[], int ledX[], int ledY[])
 {
-  unsigned tam = (barcos.get_ejeX()).size();
-  Serial.println(tam);
-  Vector<int> posX = barcos.get_ejeX();
-  Vector<int> posY = barcos.get_ejeY();
+  unsigned tam = barcos->get_size();
+  Vector<int> posX = barcos->get_ejeX();
+  Vector<int> posY = barcos->get_ejeY();
 
   for(unsigned i = 0; i < tam; ++i)
   {
     ledX[i] = posX.at(i);
     ledY[i] = posY.at(i);
   }
-  delay(1000);
   return;
 }
 
@@ -117,32 +115,54 @@ void setup()
 
 void loop()
 {
- /*nes_register = readNesController();
+  
+ nesRegister = readNesController();
  
   // Movimientos de la cruceta
   if (bitRead(nesRegister, UP_BUTTON) == 0 && ledY[0] > 0) {  //límite superior
-    for(int i=0; i<4; ++i)
+    for(int i=0; i< NUM_BARCOS; ++i)
     {
-      ----ledY[i];
+      barcos[i].mover(0, -1);
     }
     Serial.println("arriba");
   } 
   if (bitRead(nesRegister, DOWN_BUTTON) == 0 && ledY[3] < MATRIX_HEIGHT - 1-1) {  //límite inferior
-    for(int i=0; i<4; ++i)
+    for(int i=0; i< NUM_BARCOS; ++i)
     {
-      ++++ledY[i];
+      barcos[i].mover(0,1);
     }
     Serial.println("abajo");
   }
   if (bitRead(nesRegister, RIGHT_BUTTON) == 0 && ledX[2] > 0) { //límite derecha
-      --ledX;
-    Serial.println("derecha");
+  for(int i=0; i< NUM_BARCOS; ++i)
+    barcos[i].mover(1,0);
+  Serial.println("derecha");
   }
   if (bitRead(nesRegister, LEFT_BUTTON) == 0 && ledX < MATRIX_WIDTH - 1) { //límite izquierda
-    ++ledX;
+    for(int i=0; i< NUM_BARCOS; ++i)
+      barcos[i].mover(-1,0);
   }
-  */
+  
   display(barcos, ledX, ledY);
   actualizarMatriz();
 }
 
+byte readNesController() {  
+  byte tempData = 0xFF;
+  
+  // Pulso en el latch para leer el estado de los botones
+  digitalWrite(latch, HIGH);
+  delayMicroseconds(2);
+  digitalWrite(latch, LOW);
+
+  for (int i = 0; i < 8; i++) {
+    if (digitalRead(data) == LOW)
+      bitClear(tempData, i);
+    
+    digitalWrite(clk, HIGH);
+    delayMicroseconds(2);
+    digitalWrite(clk, LOW);
+  }
+  
+  return tempData;
+}
